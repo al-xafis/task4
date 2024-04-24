@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+            {{ encore_entry_script_tags('myapp') }}
+{% endblock %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+
+
+  <section class="main mt-4">
+    <div class="container">
+        <form name="form_action" action="{{ path('app_action')}}" method="POST">
+        <button type="submit" class="btn btn-secondary" name="action" value="block">Block</button>
+        <button type="submit" class="btn btn-success" name="action" value="unblock">Unblock</button>
+        <button type="submit" class="btn btn-danger" name="action" value="delete">Delete</button>
+
+        <table class="table mt-4">
+        <thead>
+            <tr>
+            <th><input class="form-check-input mainCheckbox" type="checkbox" autocomplete="off"></th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Last login</th>
+            <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for user in users %}
+                <tr>
+                    <th><input class="form-check-input subCheckbox" type="checkbox" name="{{ user.id }}"></th>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.lastLogin|date("H:i:s, d M, Y")}}</td>
+                    <td>{{ user.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+

@@ -1,0 +1,3 @@
+workers:
+  npm_encore_watch:
+    cmd: ["npm", "run", "dev-server"]

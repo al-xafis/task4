@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 
 services:
-###> doctrine/doctrine-bundle ###
+  ###> doctrine/doctrine-bundle ###
   database:
     ports:
-      - "5432"
+      - "3306"
 ###< doctrine/doctrine-bundle ###

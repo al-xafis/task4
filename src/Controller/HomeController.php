@@ -32,14 +32,6 @@ class HomeController extends AbstractController
     {
         $users = $userRepository->findAll();
 
-        $current_user_id = $this->security->getUser()->getId();
-
-        $session = $request->getSession();
-        if ($session->get($current_user_id) === 'Blocked') {
-
-            return $this->redirectToRoute('app_logout');
-        }
-
         return $this->render('home/index.html.twig', [
             'users' => $users,
         ]);
@@ -54,10 +46,6 @@ class HomeController extends AbstractController
         $session = $request->getSession();
 
         $current_user_id = $this->security->getUser()->getId();
-        if ($session->get($current_user_id) === 'Blocked') {
-
-            return $this->redirectToRoute('app_logout');
-        }
 
         if ($action === 'delete') {
             foreach($params as $user_id => $val) {

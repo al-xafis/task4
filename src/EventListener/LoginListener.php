@@ -24,11 +24,10 @@ final class LoginListener extends AbstractController
     public function onLoginSuccessEvent(LoginSuccessEvent $event)
     {
         $user = $event->getAuthenticatedToken()->getUser();
-        if (!$user->getStatus() === 'Blocked') {
-            $user->setLastLogin(new \DateTime());
+        if (!($user->getStatus() === 'Blocked')) {
+            $shit = $user->setLastLogin(new \DateTime());
             $this->em->persist($user);
             $this->em->flush();
         }
-
     }
 }

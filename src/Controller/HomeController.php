@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Container\ContainerInterface as ContainerContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +15,14 @@ class HomeController extends AbstractController
 {
     private $em;
     private $security;
+    protected $container;
 
-    public function __construct(EntityManagerInterface $em, Security $security)
+
+    public function __construct(EntityManagerInterface $em, Security $security, ContainerContainerInterface $container)
     {
         $this->em = $em;
         $this->security = $security;
+        $this->container = $container;
     }
 
     #[Route('/', name: 'app_home')]
@@ -50,6 +54,11 @@ class HomeController extends AbstractController
         if ($action === 'delete') {
             foreach($params as $user_id => $val) {
                 $user = $userRepository->find($user_id);
+                if ($current_user_id == $user->getId()) {
+                    $this->redirectToRoute('app_logout');
+                    $tokenStorage = $this->container->get('security.token_storage');
+                    $tokenStorage->setToken(null);
+                }
                 $this->em->remove($user);
             }
         } elseif ($action === 'block') {
